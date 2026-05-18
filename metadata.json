@@ -1,0 +1,8 @@
+{
+  "name": "Barbosa Pneus - Pneus Novos, Ecológicos e Usados",
+  "description": "Loja especializada em pneus novos, remold TCP e usados com montagem e balanceamento imediato.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

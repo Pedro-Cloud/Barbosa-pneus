@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  
+  --color-asphalt-900: #0f172a;
+  --color-asphalt-800: #1e293b;
+  --color-asphalt-700: #334155;
+  --color-safety-orange: #f97316;
+  --color-safety-yellow: #fbbf24;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-50 text-asphalt-900 antialiased;
+  }
+}
+
+.hero-gradient {
+  background: linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.4));
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
