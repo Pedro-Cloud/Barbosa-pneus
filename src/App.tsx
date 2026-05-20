@@ -21,8 +21,8 @@ import { motion, AnimatePresence } from 'motion/react';
 
 // --- Constants & Types ---
 
-const WHATSAPP_NUMBER = "5511999999999";
-const PHONE_NUMBER = "11999999999";
+const WHATSAPP_NUMBER = "5511987744567";
+const PHONE_NUMBER = "11987744567";
 
 interface BusinessHours {
   open: string;
@@ -31,12 +31,12 @@ interface BusinessHours {
 }
 
 const HOURS: Record<number, BusinessHours> = {
-  1: { open: "08:00", close: "18:00" }, // Seg
-  2: { open: "08:00", close: "18:00" }, // Ter
-  3: { open: "08:00", close: "18:00" }, // Qua
-  4: { open: "08:00", close: "18:00" }, // Qui
-  5: { open: "08:00", close: "18:00" }, // Sex
-  6: { open: "08:00", close: "13:00" }, // Sab
+  1: { open: "08:00", close: "18:30" }, // Seg
+  2: { open: "08:00", close: "18:30" }, // Ter
+  3: { open: "08:00", close: "18:30" }, // Qua
+  4: { open: "08:00", close: "18:30" }, // Qui
+  5: { open: "08:00", close: "17:30" }, // Sex
+  6: { open: "08:00", close: "16:00" }, // Sab
   0: { open: "00:00", close: "00:00", isClosed: true }, // Dom
 };
 
@@ -89,8 +89,7 @@ export default function App() {
 
   const sendWhatsAppQuote = (e: React.FormEvent) => {
     e.preventDefault();
-    const size = `${tireWidth}/${tireRatio} R${tireRim}`;
-    const text = encodeURIComponent(`Olá Barbosa Pneus! Gostaria de um orçamento para o pneu medida: ${size}.`);
+    const text = encodeURIComponent(`${tireWidth}/${tireRatio} R${tireRim}`);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
   };
 
@@ -110,27 +109,40 @@ export default function App() {
       desc: "Conserto especializado para segurança em qualquer estrada.",
       icon: <CheckCircle2 className="w-5 h-5 text-safety-orange" />
     },
+    { 
+      title: "Alinhamento com parceria", 
+      desc: "Direção precisa através de nossos parceiros especializados.",
+      icon: <CheckCircle2 className="w-5 h-5 text-safety-orange" />
+    },
+    { 
+      title: "Entrega disponível sob consulta", 
+      desc: "Conforto e agilidade: levamos os pneus até você.",
+      icon: <CheckCircle2 className="w-5 h-5 text-safety-orange" />
+    },
   ];
 
   const tiers = [
     {
       name: "Pneus Novos",
       badge: "Performance Premium",
-      features: ["Maior Longevidade", "Aderência Máxima", "Garantia de Fábrica"],
+      image: "/src/assets/images/imported_premium_tires_1779207835806.png",
+      features: ["Pneus Importados", "Maior Longevidade", "Aderência Máxima", "Garantia de Fábrica"],
       priceDesc: "Marcas consagradas no mercado.",
       color: "border-asphalt-200"
     },
     {
       name: "Pneus Ecológicos TCP",
       badge: "Custo-Benefício Real",
+      image: "/src/assets/images/remolded_eco_tires_1779207851063.png",
       popular: true,
-      features: ["Remanufaturados de Alta Qualidade", "Sustentáveis", "Testados por Especialistas"],
+      features: ["Remoldados de Alta Qualidade", "Sustentáveis", "Testados por Especialistas"],
       priceDesc: "Até 50% de economia.",
       color: "border-safety-orange ring-1 ring-safety-orange"
     },
     {
-      name: "Pneus Usados",
+      name: "Pneus Meia-vida",
       badge: "Economia Inteligente",
+      image: "/src/assets/images/half_life_tire_1779209424828.png",
       features: ["Rigorosamente Inspecionados", "Seleção de Marcas", "Pronta Entrega"],
       priceDesc: "Preços imbatíveis.",
       color: "border-asphalt-200"
@@ -154,9 +166,9 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-4">
-            <a href={`tel:${PHONE_NUMBER}`} className="hidden sm:flex items-center gap-2 text-safety-orange font-bold">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="hidden sm:flex items-center gap-2 text-safety-orange font-bold">
               <Phone className="w-4 h-4" />
-              <span>(11) 99999-9999</span>
+              <span>(11) 98774-4567</span>
             </a>
             <button 
               onClick={() => setMobileMenuOpen(true)}
@@ -185,8 +197,8 @@ export default function App() {
               ))}
             </div>
             <div className="mt-auto space-y-4">
-              <a href={`tel:${PHONE_NUMBER}`} className="w-full h-14 flex items-center justify-center gap-3 bg-asphalt-900 text-white rounded-xl font-bold">
-                <Phone className="w-5 h-5" /> Ligar Agora
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="w-full h-14 flex items-center justify-center gap-3 bg-asphalt-900 text-white rounded-xl font-bold">
+                <Phone className="w-5 h-5" /> Conversar no WhatsApp
               </a>
               <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="w-full h-14 flex items-center justify-center gap-3 bg-green-500 text-white rounded-xl font-bold">
                 <MessageCircle className="w-5 h-5" /> Enviar WhatsApp
@@ -323,10 +335,15 @@ export default function App() {
                       Mais Procurado
                     </div>
                   )}
-                  <div className="mb-6">
-                    <span className="text-xs font-black text-safety-orange uppercase tracking-widest mb-1 block">{tier.badge}</span>
-                    <h3 className="font-display text-2xl font-black text-asphalt-900 tracking-tight">{tier.name}</h3>
-                  </div>
+                    <div className="mb-6">
+                      {tier.image && (
+                        <div className="aspect-video w-full mb-4 rounded-xl overflow-hidden bg-zinc-100 border border-zinc-100">
+                          <img src={tier.image} alt={tier.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                        </div>
+                      )}
+                      <span className="text-xs font-black text-safety-orange uppercase tracking-widest mb-1 block">{tier.badge}</span>
+                      <h3 className="font-display text-2xl font-black text-asphalt-900 tracking-tight">{tier.name}</h3>
+                    </div>
                   <ul className="space-y-4 mb-8 flex-grow">
                     {tier.features.map(f => (
                       <li key={f} className="flex items-start gap-2.5 text-sm font-semibold text-zinc-600">
@@ -338,7 +355,9 @@ export default function App() {
                   <div className="pt-6 border-t border-zinc-100">
                     <p className="text-xs font-bold text-zinc-400 uppercase mb-4 tracking-tighter">{tier.priceDesc}</p>
                     <a 
-                      href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Olá Barbosa Pneus! Gostaria de consultar o estoque para: ${tier.name}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${tier.popular ? 'bg-safety-orange text-white' : 'bg-asphalt-50 text-asphalt-900 hover:bg-asphalt-100'}`}>
                       Ver Estoque <ChevronRight className="w-4 h-4" />
                     </a>
@@ -370,14 +389,15 @@ export default function App() {
                   <p className="text-sm font-bold text-asphalt-900">🎁 <span className="text-safety-orange">PROMOÇÃO LOCAL:</span> Compre 4 pneus novos ou TCP e ganhe a montagem e o balanceamento grátis!</p>
                 </div>
               </div>
-              <div className="lg:w-1/2 grid grid-cols-2 gap-4">
-                <div className="space-y-4 pt-8">
-                  <div className="aspect-square bg-asphalt-200 rounded-3xl overflow-hidden shadow-inner flex items-center justify-center font-black text-asphalt-300">FOTO 1</div>
-                  <div className="aspect-[3/4] bg-asphalt-100 rounded-3xl overflow-hidden shadow-inner flex items-center justify-center font-black text-asphalt-200">FOTO 2</div>
+              <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="aspect-square bg-asphalt-200 rounded-3xl overflow-hidden shadow-2xl">
+                  <img src="/src/assets/images/imported_premium_tires_1779207835806.png" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
-                <div className="space-y-4">
-                  <div className="aspect-[3/4] bg-asphalt-100 rounded-3xl overflow-hidden shadow-inner flex items-center justify-center font-black text-asphalt-200">FOTO 3</div>
-                  <div className="aspect-square bg-asphalt-200 rounded-3xl overflow-hidden shadow-inner flex items-center justify-center font-black text-asphalt-300 text-center px-4">PRECISÃO & RAPIDEZ</div>
+                <div className="aspect-square bg-asphalt-100 rounded-3xl overflow-hidden shadow-2xl">
+                  <img src="/src/assets/images/remolded_eco_tires_1779207851063.png" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                </div>
+                <div className="aspect-square bg-asphalt-100 rounded-3xl overflow-hidden shadow-2xl">
+                  <img src="/src/assets/images/half_life_tire_1779209424828.png" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
               </div>
             </div>
@@ -424,9 +444,9 @@ export default function App() {
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-white/10 rounded-xl"><MapPin className="w-6 h-6 text-safety-orange" /></div>
                     <div>
-                      <p className="font-bold text-xl mb-1">Rua Exemplo de Pneus, 123</p>
-                      <p className="text-zinc-400">Bairro Industrial, São Paulo - SP</p>
-                      <a href="#" className="inline-flex items-center gap-2 text-safety-orange font-bold mt-4 hover:underline">
+                      <p className="font-bold text-xl mb-1">Rua Benedito da Fonseca, 693</p>
+                      <p className="text-zinc-400">Jardim Santo Elias, São Paulo - SP</p>
+                      <a href="https://www.google.com/maps/dir//Barbosa+pneus,+Rua+Benedito+da+Fonseca+Rondon,+693+-+Jardim+Santo+Elias,+S%C3%A3o+Paulo+-+SP,+05136-160/@-23.4981462,-46.7381793,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x94cefecd2e9dcad3:0x41b545dd7b1a58d3!2m2!1d-46.7481966!2d-23.4996039?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-safety-orange font-bold mt-4 hover:underline">
                         <Navigation className="w-4 h-4" /> Abrir no Google Maps
                       </a>
                     </div>
@@ -434,10 +454,12 @@ export default function App() {
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-white/10 rounded-xl"><Clock className="w-6 h-6 text-safety-orange" /></div>
                     <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm font-semibold">
-                      <p className="text-zinc-400">Seg. a Sex.</p>
-                      <p>08:00 - 18:00</p>
+                      <p className="text-zinc-400">Seg. a Qui.</p>
+                      <p>08:00 - 18:30</p>
+                      <p className="text-zinc-400">Sexta</p>
+                      <p>08:00 - 17:30</p>
                       <p className="text-zinc-400">Sábado</p>
-                      <p>08:00 - 13:00</p>
+                      <p>08:00 - 16:00</p>
                       <p className="text-zinc-400">Domingo</p>
                       <p className="text-red-400">Fechado</p>
                     </div>
@@ -445,8 +467,8 @@ export default function App() {
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-white/10 rounded-xl"><Phone className="w-6 h-6 text-safety-orange" /></div>
                     <div>
-                      <p className="text-zinc-400 mb-1">Dúvidas? Ligue agora:</p>
-                      <a href={`tel:${PHONE_NUMBER}`} className="text-2xl font-black hover:text-safety-orange transition-colors">(11) 99999-9999</a>
+                      <p className="text-zinc-400 mb-1">Dúvidas? Chame no WhatsApp:</p>
+                      <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="text-2xl font-black hover:text-safety-orange transition-colors">(11) 98774-4567</a>
                     </div>
                   </div>
                 </div>
@@ -457,7 +479,7 @@ export default function App() {
                     <MapPin className="w-16 h-16 text-safety-orange mb-6 animate-bounce" />
                     <h3 className="font-display text-2xl font-black mb-4">Veja Nossa Localização no Mapa</h3>
                     <p className="text-zinc-400 text-sm mb-8">Clique abaixo para navegar via Waze ou Google Maps até nossa loja.</p>
-                    <button className="px-8 py-4 bg-white text-asphalt-900 rounded-2xl font-black tracking-tight hover:bg-safety-orange hover:text-white transition-all">ABRIR ROTA AGORA</button>
+                    <a href="https://www.google.com/maps/dir//Barbosa+pneus,+Rua+Benedito+da+Fonseca+Rondon,+693+-+Jardim+Santo+Elias,+S%C3%A3o+Paulo+-+SP,+05136-160/@-23.4981462,-46.7381793,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x94cefecd2e9dcad3:0x41b545dd7b1a58d3!2m2!1d-46.7481966!2d-23.4996039?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white text-asphalt-900 rounded-2xl font-black tracking-tight hover:bg-safety-orange hover:text-white transition-all">ABRIR ROTA AGORA</a>
                  </div>
               </div>
             </div>
@@ -483,9 +505,11 @@ export default function App() {
       {/* --- Sticky CTAs (Mobile Specific) --- */}
       <div className="md:hidden fixed bottom-6 left-6 right-6 z-[40] flex gap-3">
         <a 
-          href={`tel:${PHONE_NUMBER}`} 
+          href={`https://wa.me/${WHATSAPP_NUMBER}`} 
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex-1 h-14 bg-asphalt-900 text-white rounded-2xl border border-white/10 flex items-center justify-center gap-2 font-bold shadow-2xl active:scale-95 transition-all">
-          <Phone className="w-5 h-5" /> Ligar
+          <Phone className="w-5 h-5" /> Chamar
         </a>
         <a 
           href={`https://wa.me/${WHATSAPP_NUMBER}`} 
