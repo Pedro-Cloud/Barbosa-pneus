@@ -19,6 +19,12 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+// --- Assets ---
+import serviceBayBg from './assets/images/automotive_service_bay_1779120193079.png';
+import importedPremiumTires from './assets/images/imported_premium_tires_1779207835806.png';
+import remoldedEcoTires from './assets/images/remolded_eco_tires_1779207851063.png';
+import halfLifeTire from './assets/images/half_life_tire_1779209424828.png';
+
 // --- Constants & Types ---
 
 const WHATSAPP_NUMBER = "5511987744567";
@@ -125,7 +131,7 @@ export default function App() {
     {
       name: "Pneus Novos",
       badge: "Performance Premium",
-      image: "/src/assets/images/imported_premium_tires_1779207835806.png",
+      image: importedPremiumTires,
       features: ["Pneus Importados", "Maior Longevidade", "Aderência Máxima", "Garantia de Fábrica"],
       priceDesc: "Marcas consagradas no mercado.",
       color: "border-asphalt-200"
@@ -133,7 +139,7 @@ export default function App() {
     {
       name: "Pneus Ecológicos TCP",
       badge: "Custo-Benefício Real",
-      image: "/src/assets/images/remolded_eco_tires_1779207851063.png",
+      image: remoldedEcoTires,
       popular: true,
       features: ["Remoldados de Alta Qualidade", "Sustentáveis", "Testados por Especialistas"],
       priceDesc: "Até 50% de economia.",
@@ -142,7 +148,7 @@ export default function App() {
     {
       name: "Pneus Meia-vida",
       badge: "Economia Inteligente",
-      image: "/src/assets/images/half_life_tire_1779209424828.png",
+      image: halfLifeTire,
       features: ["Rigorosamente Inspecionados", "Seleção de Marcas", "Pronta Entrega"],
       priceDesc: "Preços imbatíveis.",
       color: "border-asphalt-200"
@@ -212,7 +218,7 @@ export default function App() {
         {/* --- Hero Section --- */}
         <section id="inicio" className="relative h-[95vh] min-h-[650px] overflow-hidden bg-asphalt-900">
           <img 
-            src="/artifacts/automotive_service_bay.png" 
+            src={serviceBayBg} 
             alt="Service Bay" 
             className="absolute inset-0 w-full h-full object-cover opacity-60"
             referrerPolicy="no-referrer"
@@ -391,13 +397,13 @@ export default function App() {
               </div>
               <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="aspect-square bg-asphalt-200 rounded-3xl overflow-hidden shadow-2xl">
-                  <img src="/src/assets/images/imported_premium_tires_1779207835806.png" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={importedPremiumTires} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
                 <div className="aspect-square bg-asphalt-100 rounded-3xl overflow-hidden shadow-2xl">
-                  <img src="/src/assets/images/remolded_eco_tires_1779207851063.png" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={remoldedEcoTires} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
                 <div className="aspect-square bg-asphalt-100 rounded-3xl overflow-hidden shadow-2xl">
-                  <img src="/src/assets/images/half_life_tire_1779209424828.png" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={halfLifeTire} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
               </div>
             </div>
