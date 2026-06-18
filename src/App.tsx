@@ -80,6 +80,61 @@ const StatusBanner = () => {
   );
 };
 
+const PromoModal = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <a 
+        href="#inicio"
+        onClick={(e) => {
+          // If the click is on the close button, don't trigger the main link
+          if ((e.target as HTMLElement).closest('button')) {
+            e.preventDefault();
+            return;
+          }
+          setIsOpen(false);
+        }}
+        className="bg-asphalt-900 rounded-3xl p-6 md:p-8 max-w-lg w-full relative shadow-2xl border border-white/10 block text-left cursor-pointer transition-transform hover:scale-[1.02]"
+      >
+        <button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsOpen(false);
+          }}
+          className="absolute top-4 right-4 p-2 bg-asphalt-800 hover:bg-asphalt-700 text-white rounded-full transition-colors z-10"
+          aria-label="Fechar"
+        >
+          <X className="w-6 h-6" />
+        </button>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-1 px-2 bg-safety-orange rounded text-white font-black italic tracking-tighter text-sm">BARBOSA</div>
+          <div className="font-display font-extrabold text-sm tracking-tight text-white">PNEUS</div>
+        </div>
+        <h2 className="text-3xl font-black text-safety-orange mb-4 font-display uppercase tracking-tight text-center animate-pulse">
+          Promoção!
+        </h2>
+        <div className="text-zinc-300 space-y-4 font-semibold md:text-lg leading-relaxed">
+          <p>
+            Pneus <span className="font-black text-white">TCP ECO TYRE</span> - Aros 13, 14, 15 e 16 para carros de passeio.
+          </p>
+          <div className="bg-asphalt-800 p-4 rounded-xl border border-asphalt-700">
+            <p className="font-black text-3xl text-white mb-2">R$ 289,90</p>
+            <p className="text-sm text-zinc-400 font-medium">Pagamento no Pix, débito ou dinheiro.</p>
+          </div>
+          <p className="flex items-center gap-2 text-safety-orange bg-safety-orange/10 p-3 rounded-lg border border-safety-orange/20 text-sm md:text-base font-bold">
+            <CheckCircle2 className="w-6 h-6 shrink-0" />
+            <span>Montagem, balanceamento e bicos cortesia.</span>
+          </p>
+        </div>
+      </a>
+    </div>
+  );
+};
+
 export default function App() {
   const [tireWidth, setTireWidth] = useState('');
   const [tireRatio, setTireRatio] = useState('');
@@ -157,17 +212,23 @@ export default function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <PromoModal />
       {/* --- Header --- */}
       <nav id="navbar" className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg py-2' : 'bg-transparent py-4'}`}>
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between mt-4 md:mt-0">
           <div className="flex items-center gap-2">
             <div className="p-1 px-2 bg-safety-orange rounded text-white font-black italic tracking-tighter text-xl">BARBOSA</div>
             <div className={`font-display font-extrabold text-xl tracking-tight ${isScrolled ? 'text-asphalt-900' : 'text-white'}`}>PNEUS</div>
           </div>
 
           <div className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-tight">
-            {['Início', 'Produtos', 'Serviços', 'Localização'].map(item => (
-              <a key={item} href={`#${item.toLowerCase()}`} className={`${isScrolled ? 'text-asphalt-700' : 'text-white'} hover:text-safety-orange transition-colors`}>{item}</a>
+            {[
+              { name: 'Início', id: 'inicio' },
+              { name: 'Produtos', id: 'produtos' },
+              { name: 'Serviços', id: 'serviços' },
+              { name: 'Localização', id: 'localização' }
+            ].map(item => (
+              <a key={item.name} href={`#${item.id}`} className={`${isScrolled ? 'text-asphalt-700' : 'text-white'} hover:text-safety-orange transition-colors`}>{item.name}</a>
             ))}
           </div>
 
@@ -198,8 +259,13 @@ export default function App() {
               <button onClick={() => setMobileMenuOpen(false)}><X className="w-8 h-8" /></button>
             </div>
             <div className="flex flex-col gap-6 text-xl font-bold pt-10">
-              {['Início', 'Produtos', 'Serviços', 'Localização'].map(item => (
-                <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} className="border-b border-asphalt-100 pb-4">{item}</a>
+              {[
+                { name: 'Início', id: 'inicio' },
+                { name: 'Produtos', id: 'produtos' },
+                { name: 'Serviços', id: 'serviços' },
+                { name: 'Localização', id: 'localização' }
+              ].map(item => (
+                <a key={item.name} href={`#${item.id}`} onClick={() => setMobileMenuOpen(false)} className="border-b border-asphalt-100 pb-4">{item.name}</a>
               ))}
             </div>
             <div className="mt-auto space-y-4">

@@ -24,3 +24,12 @@
 .text-shadow {
   text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+@keyframes modalPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.animate-modal-pulse {
+  animation: modalPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
