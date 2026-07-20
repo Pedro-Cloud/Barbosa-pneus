@@ -105,27 +105,27 @@ const PromoModal = () => {
             e.stopPropagation();
             setIsOpen(false);
           }}
-          className="absolute top-4 right-4 p-2 bg-asphalt-800 hover:bg-asphalt-700 text-white rounded-full transition-colors z-10"
+          className="absolute top-4 right-4 p-2.5 md:p-3 bg-asphalt-800 hover:bg-asphalt-700 text-white rounded-full transition-colors z-10 focus-visible:ring-2 focus-visible:ring-safety-orange outline-none"
           aria-label="Fechar"
         >
           <X className="w-6 h-6" />
         </button>
         <div className="flex items-center gap-2 mb-4">
-          <div className="p-1 px-2 bg-safety-orange rounded text-white font-black italic tracking-tighter text-sm">BARBOSA</div>
-          <div className="font-display font-extrabold text-sm tracking-tight text-white">PNEUS</div>
+          <div className="p-1 px-2 bg-safety-orange rounded text-white font-black italic tracking-tighter text-xs md:text-sm">BARBOSA</div>
+          <div className="font-display font-extrabold text-xs md:text-sm tracking-tight text-white">PNEUS</div>
         </div>
-        <h2 className="text-3xl font-black text-safety-orange mb-4 font-display uppercase tracking-tight text-center animate-pulse">
+        <h2 className="text-2xl md:text-3xl font-black text-safety-orange mb-3 md:mb-4 font-display uppercase tracking-tight text-center animate-pulse">
           Promoção!
         </h2>
-        <div className="text-zinc-300 space-y-4 font-semibold md:text-lg leading-relaxed">
+        <div className="text-zinc-300 space-y-4 font-semibold text-base md:text-lg leading-relaxed">
           <p>
             Pneus <span className="font-black text-white">TCP ECO TYRE</span> - Aros 13, 14, 15 e 16 para carros de passeio.
           </p>
-          <div className="bg-asphalt-800 p-4 rounded-xl border border-asphalt-700">
-            <p className="font-black text-3xl text-white mb-2">R$ 289,90</p>
-            <p className="text-sm text-zinc-400 font-medium">Pagamento no Pix, débito ou dinheiro.</p>
+          <div className="bg-asphalt-800 p-4 md:p-5 rounded-xl border border-asphalt-700">
+            <p className="font-black text-2xl md:text-3xl text-white mb-2">R$ 289,90</p>
+            <p className="text-xs md:text-sm text-zinc-400 font-medium">Pagamento no Pix, débito ou dinheiro.</p>
           </div>
-          <p className="flex items-center gap-2 text-safety-orange bg-safety-orange/10 p-3 rounded-lg border border-safety-orange/20 text-sm md:text-base font-bold">
+          <p className="flex items-center gap-2.5 text-safety-orange bg-safety-orange/10 p-3.5 rounded-lg border border-safety-orange/20 text-sm md:text-base font-bold">
             <CheckCircle2 className="w-6 h-6 shrink-0" />
             <span>Montagem, balanceamento e bicos cortesia.</span>
           </p>
@@ -147,6 +147,17 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
 
   const sendWhatsAppQuote = (e: React.FormEvent) => {
     e.preventDefault();
@@ -211,14 +222,14 @@ export default function App() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen pb-24 md:pb-0">
       <PromoModal />
       {/* --- Header --- */}
-      <nav id="navbar" className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg py-2' : 'bg-transparent py-4'}`}>
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between mt-4 md:mt-0">
+      <nav id="navbar" className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg py-2 md:py-3' : 'bg-transparent py-4 md:py-6'}`}>
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-1 px-2 bg-safety-orange rounded text-white font-black italic tracking-tighter text-xl">BARBOSA</div>
-            <div className={`font-display font-extrabold text-xl tracking-tight ${isScrolled ? 'text-asphalt-900' : 'text-white'}`}>PNEUS</div>
+            <div className="p-1 px-2 bg-safety-orange rounded text-white font-black italic tracking-tighter text-lg md:text-xl">BARBOSA</div>
+            <div className={`font-display font-extrabold text-lg md:text-xl tracking-tight ${isScrolled ? 'text-asphalt-900' : 'text-white'}`}>PNEUS</div>
           </div>
 
           <div className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-tight">
@@ -239,7 +250,7 @@ export default function App() {
             </a>
             <button 
               onClick={() => setMobileMenuOpen(true)}
-              className={`md:hidden p-2 rounded-lg ${isScrolled ? 'text-asphalt-900 border border-asphalt-200' : 'text-white border border-white/30'}`}>
+              className={`md:hidden p-2.5 rounded-lg focus-visible:ring-2 focus-visible:ring-safety-orange outline-none ${isScrolled ? 'text-asphalt-900 border border-asphalt-200' : 'text-white border border-white/30'}`}>
               <Menu className="w-6 h-6" />
             </button>
           </div>
@@ -253,26 +264,32 @@ export default function App() {
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 z-[60] bg-white p-6 flex flex-col gap-6">
-            <div className="flex justify-between items-center">
+            className="fixed inset-0 z-[110] bg-white p-6 flex flex-col gap-6 overflow-y-auto">
+            <div className="flex justify-between items-center shrink-0">
               <span className="font-display font-black text-2xl italic tracking-tighter text-asphalt-900">BARBOSA PNEUS</span>
-              <button onClick={() => setMobileMenuOpen(false)}><X className="w-8 h-8" /></button>
+              <button 
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-3 -mr-3 text-asphalt-900 hover:text-safety-orange transition-colors focus-visible:ring-2 focus-visible:ring-safety-orange outline-none rounded-full"
+                aria-label="Fechar Menu"
+              >
+                <X className="w-8 h-8" />
+              </button>
             </div>
-            <div className="flex flex-col gap-6 text-xl font-bold pt-10">
+            <div className="flex flex-col gap-6 text-xl font-bold pt-6">
               {[
                 { name: 'Início', id: 'inicio' },
                 { name: 'Produtos', id: 'produtos' },
                 { name: 'Serviços', id: 'serviços' },
                 { name: 'Localização', id: 'localização' }
               ].map(item => (
-                <a key={item.name} href={`#${item.id}`} onClick={() => setMobileMenuOpen(false)} className="border-b border-asphalt-100 pb-4">{item.name}</a>
+                <a key={item.name} href={`#${item.id}`} onClick={() => setMobileMenuOpen(false)} className="border-b border-asphalt-100 pb-4 block hover:text-safety-orange transition-colors">{item.name}</a>
               ))}
             </div>
-            <div className="mt-auto space-y-4">
-              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="w-full h-14 flex items-center justify-center gap-3 bg-asphalt-900 text-white rounded-xl font-bold">
+            <div className="mt-auto space-y-4 pt-8">
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="w-full min-h-[56px] flex items-center justify-center gap-3 bg-asphalt-900 text-white rounded-xl font-bold hover:bg-asphalt-800 transition-colors">
                 <Phone className="w-5 h-5" /> Conversar no WhatsApp
               </a>
-              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="w-full h-14 flex items-center justify-center gap-3 bg-green-500 text-white rounded-xl font-bold">
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="w-full min-h-[56px] flex items-center justify-center gap-3 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600 transition-colors">
                 <MessageCircle className="w-5 h-5" /> Enviar WhatsApp
               </a>
             </div>
@@ -292,18 +309,18 @@ export default function App() {
           <div className="absolute inset-0 hero-gradient" />
           
           <div className="relative h-full max-w-7xl mx-auto px-4 flex flex-col justify-center">
-            <div className="grid lg:grid-cols-2 gap-12 items-center mt-20">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mt-20 md:mt-24">
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}>
-                <div className="inline-block px-3 py-1 bg-safety-orange/20 border border-safety-orange/30 text-safety-orange text-xs font-black uppercase tracking-widest rounded-full mb-6 italic">
+                <div className="inline-block px-4 py-1.5 bg-safety-orange/20 border border-safety-orange/30 text-safety-orange text-[10px] md:text-xs font-black uppercase tracking-widest rounded-full mb-4 md:mb-6 italic">
                   Segurança & Performance no Asfalto
                 </div>
-                <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tighter mb-6">
+                <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tighter mb-4 md:mb-6">
                   Sua Jornada Começa com <span className="text-safety-orange italic">Pneus de Confiança.</span>
                 </h1>
-                <p className="text-xl text-zinc-300 max-w-xl mb-8 leading-relaxed">
+                <p className="text-lg md:text-xl text-zinc-300 max-w-xl mb-6 md:mb-8 leading-relaxed">
                   Novos, Ecológicos ou Usados. Seleção rigorosa para quem valoriza segurança, economia e velocidade na instalação.
                 </p>
                 
@@ -339,7 +356,8 @@ export default function App() {
                       <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1 ml-1">Largura</label>
                       <input 
                         required
-                        type="text" 
+                        type="text"
+                        inputMode="numeric" 
                         placeholder="Ex: 205" 
                         className="w-full h-14 bg-zinc-50 border border-zinc-200 rounded-xl px-4 font-bold focus:ring-2 focus:ring-safety-orange outline-none transition-all placeholder:text-zinc-400"
                         value={tireWidth}
@@ -350,7 +368,8 @@ export default function App() {
                       <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1 ml-1">Perfil</label>
                       <input 
                         required
-                        type="text" 
+                        type="text"
+                        inputMode="numeric" 
                         placeholder="Ex: 55" 
                         className="w-full h-14 bg-zinc-50 border border-zinc-200 rounded-xl px-4 font-bold focus:ring-2 focus:ring-safety-orange outline-none transition-all placeholder:text-zinc-400"
                         value={tireRatio}
@@ -362,6 +381,7 @@ export default function App() {
                       <input 
                         required
                         type="text" 
+                        inputMode="numeric"
                         placeholder="Ex: 16" 
                         className="w-full h-14 bg-zinc-50 border border-zinc-200 rounded-xl px-4 font-bold focus:ring-2 focus:ring-safety-orange outline-none transition-all placeholder:text-zinc-400"
                         value={tireRim}
@@ -372,15 +392,15 @@ export default function App() {
 
                   <button 
                     type="submit"
-                    className="group w-full h-16 bg-safety-orange hover:bg-orange-600 active:scale-[0.98] text-white rounded-xl font-display font-black text-lg tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-safety-orange/30 transition-all">
+                    className="group w-full h-16 bg-safety-orange hover:bg-orange-600 active:scale-[0.98] focus-visible:ring-4 focus-visible:ring-safety-orange/50 outline-none text-white rounded-xl font-display font-black text-lg tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-safety-orange/30 transition-all">
                     SOLICITAR PREÇO <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </form>
 
-                <div className="mt-6 flex items-center justify-between text-[11px] font-bold text-zinc-400 uppercase tracking-wider">
-                  <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-green-500" /> Instal. Imediata</div>
-                  <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-green-500" /> Pronta Entrega</div>
-                  <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-green-500" /> Garantia</div>
+                <div className="mt-6 flex flex-wrap items-center justify-center md:justify-between gap-3 text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider">
+                  <div className="flex items-center gap-1.5 whitespace-nowrap"><ShieldCheck className="w-4 h-4 text-green-500 shrink-0" /> Instal. Imediata</div>
+                  <div className="flex items-center gap-1.5 whitespace-nowrap"><ShieldCheck className="w-4 h-4 text-green-500 shrink-0" /> Pronta Entrega</div>
+                  <div className="flex items-center gap-1.5 whitespace-nowrap"><ShieldCheck className="w-4 h-4 text-green-500 shrink-0" /> Garantia</div>
                 </div>
               </motion.div>
             </div>
@@ -430,7 +450,7 @@ export default function App() {
                       href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Olá Barbosa Pneus! Gostaria de consultar o estoque para: ${tier.name}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${tier.popular ? 'bg-safety-orange text-white' : 'bg-asphalt-50 text-asphalt-900 hover:bg-asphalt-100'}`}>
+                      className={`w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all focus-visible:ring-4 focus-visible:ring-safety-orange/50 outline-none ${tier.popular ? 'bg-safety-orange text-white' : 'bg-asphalt-50 text-asphalt-900 hover:bg-asphalt-100'}`}>
                       Ver Estoque <ChevronRight className="w-4 h-4" />
                     </a>
                   </div>
@@ -575,18 +595,18 @@ export default function App() {
       </footer>
 
       {/* --- Sticky CTAs (Mobile Specific) --- */}
-      <div className="md:hidden fixed bottom-6 left-6 right-6 z-[40] flex gap-3">
+      <div className="md:hidden fixed bottom-6 left-4 right-4 z-[40] flex gap-3">
         <a 
           href={`https://wa.me/${WHATSAPP_NUMBER}`} 
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 h-14 bg-asphalt-900 text-white rounded-2xl border border-white/10 flex items-center justify-center gap-2 font-bold shadow-2xl active:scale-95 transition-all">
-          <Phone className="w-5 h-5" /> Chamar
+          className="flex-1 min-h-[56px] px-2 bg-asphalt-900 text-white rounded-2xl border border-white/10 flex items-center justify-center gap-1 sm:gap-2 font-bold shadow-2xl active:scale-95 transition-transform text-sm sm:text-base">
+          <Phone className="w-5 h-5 shrink-0" /> Chamar
         </a>
         <a 
           href={`https://wa.me/${WHATSAPP_NUMBER}`} 
-          className="flex-1 h-14 bg-green-500 text-white rounded-2xl flex items-center justify-center gap-2 font-bold shadow-2xl active:scale-95 transition-all">
-          <MessageCircle className="w-5 h-5" /> WhatsApp
+          className="flex-1 min-h-[56px] px-2 bg-green-500 text-white rounded-2xl flex items-center justify-center gap-1 sm:gap-2 font-bold shadow-2xl active:scale-95 transition-transform text-sm sm:text-base">
+          <MessageCircle className="w-5 h-5 shrink-0" /> WhatsApp
         </a>
       </div>
 
