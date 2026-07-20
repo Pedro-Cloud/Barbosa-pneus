@@ -148,6 +148,28 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const [showMobileCTA, setShowMobileCTA] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShowMobileCTA(true);
+        } else {
+          setShowMobileCTA(false);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const target = document.getElementById('localização');
+    if (target) observer.observe(target);
+
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, []);
+
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -595,20 +617,31 @@ export default function App() {
       </footer>
 
       {/* --- Sticky CTAs (Mobile Specific) --- */}
-      <div className="md:hidden fixed bottom-6 left-4 right-4 z-[40] flex gap-3">
-        <a 
-          href={`https://wa.me/${WHATSAPP_NUMBER}`} 
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 min-h-[56px] px-2 bg-asphalt-900 text-white rounded-2xl border border-white/10 flex items-center justify-center gap-1 sm:gap-2 font-bold shadow-2xl active:scale-95 transition-transform text-sm sm:text-base">
-          <Phone className="w-5 h-5 shrink-0" /> Chamar
-        </a>
-        <a 
-          href={`https://wa.me/${WHATSAPP_NUMBER}`} 
-          className="flex-1 min-h-[56px] px-2 bg-green-500 text-white rounded-2xl flex items-center justify-center gap-1 sm:gap-2 font-bold shadow-2xl active:scale-95 transition-transform text-sm sm:text-base">
-          <MessageCircle className="w-5 h-5 shrink-0" /> WhatsApp
-        </a>
-      </div>
+      <AnimatePresence>
+        {showMobileCTA && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[40] flex flex-row items-center gap-4"
+          >
+            <a 
+              href={`https://wa.me/${WHATSAPP_NUMBER}`} 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-14 h-14 bg-asphalt-900 text-white rounded-full border border-white/10 flex items-center justify-center shadow-2xl active:scale-95 transition-transform">
+              <Phone className="w-6 h-6" />
+            </a>
+            <a 
+              href={`https://wa.me/${WHATSAPP_NUMBER}`} 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-14 h-14 bg-transparent rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-transform overflow-hidden">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" className="w-[115%] h-[115%] max-w-none object-cover" referrerPolicy="no-referrer" />
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
